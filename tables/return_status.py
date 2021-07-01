@@ -19,3 +19,7 @@ class ReturnStatus(Table):
         self.issue_status = IssueStatus.find_via_pk(self.issue_id)
         self.member = Member.find_via_pk(self.member_id)
         self.book = Book.find_via_pk(self.book_ISBN)
+
+    @classmethod
+    def returned_books(cls, member_id):
+        return [return_status.book for return_status in cls.find(dict(member_id=member_id))]

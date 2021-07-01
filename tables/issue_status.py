@@ -16,3 +16,7 @@ class IssueStatus(Table):
 
         self.member = Member.find_via_pk(self.member_id)
         self.book = Book.find_via_pk(self.book_ISBN)
+
+    @classmethod
+    def borrowed_books(cls, member_id):
+        return [issue_status.book for issue_status in cls.find(dict(member_id=member_id))]

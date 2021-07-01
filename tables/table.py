@@ -35,3 +35,23 @@ class Table:
         con_obj.execute(query, list(update.values()))
         con_obj.commit()
         con_obj.close()
+
+    @classmethod
+    def delete_via_pk(cls, pk: str) -> None:
+        con_obj = sqlite3.connect(DB_PATH)
+        query = f'DELETE FROM {cls._table_name} WHERE "{cls._table_pk}" = ?'
+        con_obj.execute(query, (pk,))
+        con_obj.commit()
+        con_obj.close()
+
+    @classmethod
+    def find(cls, _filter: dict):
+        con_obj = sqlite3.connect(DB_PATH)
+        if not _filter:
+            condition = '1 = 1'
+        else:
+            condition = ' AND '.join(f'"{col}" = ?' for col in _filter.keys())
+        cursor = con_obj.execute(f'SELECT * FROM {cls._table_name} WHERE {condition}', list(_filter.values()))
+        selected_table = cursor.fetchall()
+        con_obj.close()
+        return [cls(data) for data in selected_table]

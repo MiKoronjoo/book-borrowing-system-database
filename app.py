@@ -1,6 +1,5 @@
 import sqlite3
 
-from tables.book import Book
 from config import DB_PATH
 
 
