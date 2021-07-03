@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'returned_books.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -14,7 +6,7 @@ class Ui_ReturnedBooksWindow(object):
         ReturnedBooksWindow.setObjectName("ReturnedBooksWindow")
         ReturnedBooksWindow.resize(700, 400)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ReturnedBooksWindow.setWindowIcon(icon)
         ReturnedBooksWindow.setStyleSheet("background-color: rgb(148, 226, 194);")
         self.centralwidget = QtWidgets.QWidget(ReturnedBooksWindow)
@@ -84,7 +76,7 @@ class Ui_ReturnedBooksWindow(object):
         ReturnedBooksWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(ReturnedBooksWindow)
-        from main_ui import ui as ui_main
+        from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(ReturnedBooksWindow))
         self.BooksComboBox.currentIndexChanged['int'].connect(self.console.clear)
         QtCore.QMetaObject.connectSlotsByName(ReturnedBooksWindow)
@@ -113,11 +105,3 @@ class Ui_ReturnedBooksWindow(object):
 
 
 ui = Ui_ReturnedBooksWindow()
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    ReturnedBooksWindow = QtWidgets.QMainWindow()
-    ui.setupUi(ReturnedBooksWindow)
-    ReturnedBooksWindow.show()
-    sys.exit(app.exec_())

@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'issues.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -14,7 +6,7 @@ class Ui_IssueStatusWindow(object):
         IssueStatusWindow.setObjectName("IssueStatusWindow")
         IssueStatusWindow.resize(700, 400)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         IssueStatusWindow.setWindowIcon(icon)
         IssueStatusWindow.setStyleSheet("background-color: rgb(148, 226, 194);")
         self.centralwidget = QtWidgets.QWidget(IssueStatusWindow)
@@ -130,7 +122,7 @@ class Ui_IssueStatusWindow(object):
         IssueStatusWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(IssueStatusWindow)
-        from main_ui import ui as ui_main
+        from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(IssueStatusWindow))
         QtCore.QMetaObject.connectSlotsByName(IssueStatusWindow)
 
@@ -151,11 +143,3 @@ class Ui_IssueStatusWindow(object):
 
 
 ui = Ui_IssueStatusWindow()
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    IssueStatusWindow = QtWidgets.QMainWindow()
-    ui.setupUi(IssueStatusWindow)
-    IssueStatusWindow.show()
-    sys.exit(app.exec_())

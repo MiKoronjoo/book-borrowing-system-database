@@ -1,18 +1,11 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'bbs.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from books_ui import ui as ui_books
-from borrowed_books_ui import ui as ui_borrowed_books
-from issues_ui import ui as ui_issues
-from members_ui import ui as ui_members
-from returned_books_ui import ui as ui_returned_books
-from returns_ui import ui as ui_returns
+
+from .books_ui import ui as ui_books
+from .borrowed_books_ui import ui as ui_borrowed_books
+from .issues_ui import ui as ui_issues
+from .members_ui import ui as ui_members
+from .returned_books_ui import ui as ui_returned_books
+from .returns_ui import ui as ui_returns
 
 
 class Ui_MainWindow(object):
@@ -20,7 +13,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(700, 400)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet("background-color: rgb(32, 215, 146);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -134,12 +127,13 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Select a table"))
 
 
-ui = Ui_MainWindow()
-if __name__ == "__main__":
+def lunch_app():
     import sys
-
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
+
+ui = Ui_MainWindow()

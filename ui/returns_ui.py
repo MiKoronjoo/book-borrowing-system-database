@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'returns.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -14,7 +6,7 @@ class Ui_ReturnStatusWindow(object):
         ReturnStatusWindow.setObjectName("ReturnStatusWindow")
         ReturnStatusWindow.resize(700, 400)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         ReturnStatusWindow.setWindowIcon(icon)
         ReturnStatusWindow.setStyleSheet("background-color: rgb(148, 226, 194);")
         self.centralwidget = QtWidgets.QWidget(ReturnStatusWindow)
@@ -118,7 +110,7 @@ class Ui_ReturnStatusWindow(object):
         ReturnStatusWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(ReturnStatusWindow)
-        from main_ui import ui as ui_main
+        from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(ReturnStatusWindow))
         QtCore.QMetaObject.connectSlotsByName(ReturnStatusWindow)
 
@@ -135,11 +127,3 @@ class Ui_ReturnStatusWindow(object):
 
 
 ui = Ui_ReturnStatusWindow()
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    ReturnStatusWindow = QtWidgets.QMainWindow()
-    ui.setupUi(ReturnStatusWindow)
-    ReturnStatusWindow.show()
-    sys.exit(app.exec_())

@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'borrowed_books.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -14,7 +6,7 @@ class Ui_BorrowedBooksWindow(object):
         BorrowedBooksWindow.setObjectName("BorrowedBooksWindow")
         BorrowedBooksWindow.resize(700, 400)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         BorrowedBooksWindow.setWindowIcon(icon)
         BorrowedBooksWindow.setStyleSheet("background-color: rgb(148, 226, 194);")
         self.centralwidget = QtWidgets.QWidget(BorrowedBooksWindow)
@@ -84,7 +76,7 @@ class Ui_BorrowedBooksWindow(object):
         BorrowedBooksWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(BorrowedBooksWindow)
-        from main_ui import ui as ui_main
+        from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(BorrowedBooksWindow))
         self.BooksComboBox.currentIndexChanged['int'].connect(self.console.clear)
         self.searchButton.clicked.connect(self.BooksComboBox.clear)
@@ -114,11 +106,3 @@ class Ui_BorrowedBooksWindow(object):
 
 
 ui = Ui_BorrowedBooksWindow()
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    BorrowedBooksWindow = QtWidgets.QMainWindow()
-    ui.setupUi(BorrowedBooksWindow)
-    BorrowedBooksWindow.show()
-    sys.exit(app.exec_())

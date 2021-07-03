@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'members.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -14,7 +6,7 @@ class Ui_MembersWindow(object):
         MembersWindow.setObjectName("MembersWindow")
         MembersWindow.resize(700, 400)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("icons/bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MembersWindow.setWindowIcon(icon)
         MembersWindow.setStyleSheet("background-color: rgb(148, 226, 194);")
         self.centralwidget = QtWidgets.QWidget(MembersWindow)
@@ -144,7 +136,7 @@ class Ui_MembersWindow(object):
         MembersWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MembersWindow)
-        from main_ui import ui as ui_main
+        from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(MembersWindow))
         QtCore.QMetaObject.connectSlotsByName(MembersWindow)
 
@@ -161,11 +153,3 @@ class Ui_MembersWindow(object):
 
 
 ui = Ui_MembersWindow()
-if __name__ == "__main__":
-    import sys
-
-    app = QtWidgets.QApplication(sys.argv)
-    MembersWindow = QtWidgets.QMainWindow()
-    ui.setupUi(MembersWindow)
-    MembersWindow.show()
-    sys.exit(app.exec_())
