@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIntValidator
 
 
 class Ui_MembersWindow(object):
@@ -12,6 +13,7 @@ class Ui_MembersWindow(object):
         self.centralwidget = QtWidgets.QWidget(MembersWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.IDEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.IDEdit.setValidator(QIntValidator())
         self.IDEdit.setGeometry(QtCore.QRect(60, 110, 91, 25))
         self.IDEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.IDEdit.setInputMask("")
@@ -36,6 +38,7 @@ class Ui_MembersWindow(object):
         self.label_4.setGeometry(QtCore.QRect(500, 90, 151, 17))
         self.label_4.setObjectName("label_4")
         self.MaxCreditEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.MaxCreditEdit.setValidator(QIntValidator())
         self.MaxCreditEdit.setGeometry(QtCore.QRect(500, 110, 151, 25))
         self.MaxCreditEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.MaxCreditEdit.setInputMask("")
@@ -68,6 +71,7 @@ class Ui_MembersWindow(object):
         self.label_8.setGeometry(QtCore.QRect(410, 90, 81, 20))
         self.label_8.setObjectName("label_8")
         self.AgeEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.AgeEdit.setValidator(QIntValidator())
         self.AgeEdit.setGeometry(QtCore.QRect(410, 110, 71, 25))
         self.AgeEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.AgeEdit.setInputMask("")

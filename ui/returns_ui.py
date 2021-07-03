@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIntValidator
 
 
 class Ui_ReturnStatusWindow(object):
@@ -12,6 +13,7 @@ class Ui_ReturnStatusWindow(object):
         self.centralwidget = QtWidgets.QWidget(ReturnStatusWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.IDEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.IDEdit.setValidator(QIntValidator())
         self.IDEdit.setGeometry(QtCore.QRect(60, 140, 91, 25))
         self.IDEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.IDEdit.setInputMask("")

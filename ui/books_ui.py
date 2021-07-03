@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIntValidator
 
 
 class Ui_BooksWindow(object):
@@ -42,6 +43,7 @@ class Ui_BooksWindow(object):
         self.label_4.setGeometry(QtCore.QRect(270, 150, 121, 17))
         self.label_4.setObjectName("label_4")
         self.PriceEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.PriceEdit.setValidator(QIntValidator())
         self.PriceEdit.setGeometry(QtCore.QRect(270, 170, 121, 25))
         self.PriceEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.PriceEdit.setInputMask("")
@@ -66,6 +68,7 @@ class Ui_BooksWindow(object):
         self.PublisherEdit.setText("")
         self.PublisherEdit.setObjectName("PublisherEdit")
         self.StatusEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.StatusEdit.setValidator(QIntValidator())
         self.StatusEdit.setGeometry(QtCore.QRect(320, 230, 121, 25))
         self.StatusEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.StatusEdit.setInputMask("")
@@ -148,10 +151,12 @@ class Ui_BooksWindow(object):
         self.retranslateUi(BooksWindow)
         from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(BooksWindow))
-        self.deleteButton.clicked.connect(lambda: 'remove')
-        self.refreshButton.clicked.connect(lambda: 'refresh')
-        self.submitButton.clicked.connect(lambda: 'submit')
+        self.deleteButton.clicked.connect(self.delete_via_pk)
+        self.refreshButton.clicked.connect(self.find_via_pk)
+        self.submitButton.clicked.connect(lambda: self.update_book() if self.update else self.insert_book())
+        self.ISBNEdit.editingFinished.connect(self.find_via_pk)
         QtCore.QMetaObject.connectSlotsByName(BooksWindow)
+        self.update = False
 
     def retranslateUi(self, BooksWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -164,6 +169,79 @@ class Ui_BooksWindow(object):
         self.label_6.setText(_translate("BooksWindow", "Publisher"))
         self.label_7.setText(_translate("BooksWindow", "Status"))
         self.mainLabel.setText(_translate("BooksWindow", "Books"))
+
+    def clear(self):
+        self.ISBNEdit.setText('')
+        self.TitleEdit.setText('')
+        self.CategoryEdit.setText('')
+        self.PriceEdit.setText('')
+        self.AuthorEdit.setText('')
+        self.PublisherEdit.setText('')
+        self.StatusEdit.setText('')
+        self.console.setText('')
+        self.update = False
+
+    def find_via_pk(self):
+        from tables.book import Book
+        isbn = self.ISBNEdit.text().strip()
+        book = Book.find_via_pk(isbn)
+        if book:
+            self.TitleEdit.setText(book.title)
+            self.CategoryEdit.setText(book.category)
+            self.PriceEdit.setText(str(book.price))
+            self.AuthorEdit.setText(book.author)
+            self.PublisherEdit.setText(book.publisher)
+            self.StatusEdit.setText(str(book.status))
+            self.update = True
+            # TODO: change 'add' icon to 'update'
+        else:
+            self.update = False
+
+    def insert_book(self):
+        from tables.book import Book
+        isbn = self.ISBNEdit.text().strip()
+        if isbn:
+            Book.insert(dict(
+                ISBN=self.ISBNEdit.text(),
+                title=self.TitleEdit.text(),
+                category=self.CategoryEdit.text(),
+                price=int(self.PriceEdit.text() or '0'),
+                author=self.AuthorEdit.text(),
+                publisher=self.PublisherEdit.text(),
+                status=int(self.StatusEdit.text() or '0')
+            ))
+            self.clear()
+            self.console.setText('The book inserted successfully')
+        else:
+            self.console.setText('Fill the ISBN field first')
+
+    def update_book(self):
+        from tables.book import Book
+        isbn = self.ISBNEdit.text().strip()
+        if isbn:
+            Book.update_via_pk(dict(
+                ISBN=isbn,
+                title=self.TitleEdit.text(),
+                category=self.CategoryEdit.text(),
+                price=int(self.PriceEdit.text() or '0'),
+                author=self.AuthorEdit.text(),
+                publisher=self.PublisherEdit.text(),
+                status=int(self.StatusEdit.text() or '0')
+            ), self.ISBNEdit.text())
+            self.clear()
+            self.console.setText('The book updated successfully')
+        else:
+            self.console.setText('Fill the ISBN field first')
+
+    def delete_via_pk(self):
+        from tables.book import Book
+        isbn = self.ISBNEdit.text().strip()
+        if isbn:
+            Book.delete_via_pk(isbn)
+            self.clear()
+            self.console.setText(f'The book with ISBN {isbn} deleted successfully')
+        else:
+            self.console.setText('Fill the ISBN field first')
 
 
 ui = Ui_BooksWindow()
