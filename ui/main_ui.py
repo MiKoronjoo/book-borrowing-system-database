@@ -19,6 +19,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.booksButton = QtWidgets.QPushButton(self.centralwidget)
+        self.booksButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.booksButton.setGeometry(QtCore.QRect(180, 130, 171, 91))
         self.booksButton.setStyleSheet("QPushButton {\n"
                                        "border-image: url(icons/buttons/Books.png);\n"
@@ -32,6 +33,7 @@ class Ui_MainWindow(object):
         self.booksButton.setText("")
         self.booksButton.setObjectName("booksButton")
         self.MemberButton = QtWidgets.QPushButton(self.centralwidget)
+        self.MemberButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.MemberButton.setGeometry(QtCore.QRect(360, 130, 171, 91))
         self.MemberButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/buttons/Members.png);\n"
@@ -45,6 +47,7 @@ class Ui_MainWindow(object):
         self.MemberButton.setText("")
         self.MemberButton.setObjectName("MemberButton")
         self.IssuesButton = QtWidgets.QPushButton(self.centralwidget)
+        self.IssuesButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.IssuesButton.setGeometry(QtCore.QRect(180, 230, 171, 91))
         self.IssuesButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/buttons/Issues.png);\n"
@@ -58,6 +61,7 @@ class Ui_MainWindow(object):
         self.IssuesButton.setText("")
         self.IssuesButton.setObjectName("IssuesButton")
         self.ReturnsButton = QtWidgets.QPushButton(self.centralwidget)
+        self.ReturnsButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.ReturnsButton.setGeometry(QtCore.QRect(360, 230, 171, 91))
         self.ReturnsButton.setStyleSheet("QPushButton {\n"
                                          "border-image: url(icons/buttons/Returns.png);\n"
@@ -82,6 +86,7 @@ class Ui_MainWindow(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.BorBButton = QtWidgets.QPushButton(self.centralwidget)
+        self.BorBButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.BorBButton.setGeometry(QtCore.QRect(180, 330, 171, 31))
         self.BorBButton.setStyleSheet("QPushButton {\n"
                                       "border-image: url(icons/buttons/BorrowedBooks.png);\n"
@@ -95,6 +100,7 @@ class Ui_MainWindow(object):
         self.BorBButton.setText("")
         self.BorBButton.setObjectName("BorBButton")
         self.RetBButton = QtWidgets.QPushButton(self.centralwidget)
+        self.RetBButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.RetBButton.setGeometry(QtCore.QRect(360, 330, 171, 31))
         self.RetBButton.setStyleSheet("QPushButton {\n"
                                       "border-image: url(icons/buttons/ReturnedBooks.png);\n"
