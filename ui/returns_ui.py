@@ -60,64 +60,66 @@ class Ui_ReturnStatusWindow(object):
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(330, 120, 321, 17))
         self.label_4.setObjectName("label_4")
-        self.deleteButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.deleteButton_2.setGeometry(QtCore.QRect(610, 60, 41, 41))
-        self.deleteButton_2.setStyleSheet("QPushButton {\n"
-                                          "border-image: url(icons/remove.png);\n"
-                                          "}\n"
-                                          "QPushButton:hover {\n"
-                                          "border-image: url(icons/remove-hover.png);\n"
-                                          "}\n"
-                                          "QPushButton:pressed {\n"
-                                          "border-image: url(icons/remove-pressed.png);\n"
-                                          "}")
-        self.deleteButton_2.setText("")
-        self.deleteButton_2.setObjectName("deleteButton_2")
-        self.refreshButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.refreshButton_2.setGeometry(QtCore.QRect(550, 60, 41, 41))
-        self.refreshButton_2.setStyleSheet("QPushButton {\n"
-                                           "border-image: url(icons/undo.png);\n"
-                                           "}\n"
-                                           "QPushButton:hover {\n"
-                                           "border-image: url(icons/undo-hover.png);\n"
-                                           "}\n"
-                                           "QPushButton:pressed {\n"
-                                           "border-image: url(icons/undo-pressed.png);\n"
-                                           "}")
-        self.refreshButton_2.setText("")
-        self.refreshButton_2.setObjectName("refreshButton_2")
-        self.submitButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.submitButton_2.setGeometry(QtCore.QRect(610, 210, 41, 41))
-        self.submitButton_2.setStyleSheet("QPushButton {\n"
-                                          "border-image: url(icons/plus.png);\n"
-                                          "}\n"
-                                          "QPushButton:hover {\n"
-                                          "border-image: url(icons/plus-hover.png);\n"
-                                          "}\n"
-                                          "QPushButton:pressed {\n"
-                                          "border-image: url(icons/plus-pressed.png);\n"
-                                          "}")
-        self.submitButton_2.setText("")
-        self.submitButton_2.setObjectName("submitButton_2")
-        self.backButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.backButton_2.setGeometry(QtCore.QRect(30, 30, 51, 51))
-        self.backButton_2.setStyleSheet("QPushButton {\n"
-                                        "border-image: url(icons/back.png);\n"
+        self.deleteButton = QtWidgets.QPushButton(self.centralwidget)
+        self.deleteButton.setGeometry(QtCore.QRect(610, 60, 41, 41))
+        self.deleteButton.setStyleSheet("QPushButton {\n"
+                                        "border-image: url(icons/remove.png);\n"
                                         "}\n"
                                         "QPushButton:hover {\n"
-                                        "border-image: url(icons/back-hover.png);\n"
+                                        "border-image: url(icons/remove-hover.png);\n"
                                         "}\n"
                                         "QPushButton:pressed {\n"
-                                        "border-image: url(icons/back-pressed.png);\n"
+                                        "border-image: url(icons/remove-pressed.png);\n"
                                         "}")
-        self.backButton_2.setText("")
-        self.backButton_2.setObjectName("backButton_2")
+        self.deleteButton.setText("")
+        self.deleteButton.setObjectName("deleteButton")
+        self.refreshButton = QtWidgets.QPushButton(self.centralwidget)
+        self.refreshButton.setGeometry(QtCore.QRect(550, 60, 41, 41))
+        self.refreshButton.setStyleSheet("QPushButton {\n"
+                                         "border-image: url(icons/undo.png);\n"
+                                         "}\n"
+                                         "QPushButton:hover {\n"
+                                         "border-image: url(icons/undo-hover.png);\n"
+                                         "}\n"
+                                         "QPushButton:pressed {\n"
+                                         "border-image: url(icons/undo-pressed.png);\n"
+                                         "}")
+        self.refreshButton.setText("")
+        self.refreshButton.setObjectName("refreshButton")
+        self.submitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.submitButton.setGeometry(QtCore.QRect(610, 210, 41, 41))
+        self.submitButton.setStyleSheet("QPushButton {\n"
+                                        "border-image: url(icons/plus.png);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "border-image: url(icons/plus-hover.png);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {\n"
+                                        "border-image: url(icons/plus-pressed.png);\n"
+                                        "}")
+        self.submitButton.setText("")
+        self.submitButton.setObjectName("submitButton")
+        self.backButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backButton.setGeometry(QtCore.QRect(30, 30, 51, 51))
+        self.backButton.setStyleSheet("QPushButton {\n"
+                                      "border-image: url(icons/back.png);\n"
+                                      "}\n"
+                                      "QPushButton:hover {\n"
+                                      "border-image: url(icons/back-hover.png);\n"
+                                      "}\n"
+                                      "QPushButton:pressed {\n"
+                                      "border-image: url(icons/back-pressed.png);\n"
+                                      "}")
+        self.backButton.setText("")
+        self.backButton.setObjectName("backButton")
         ReturnStatusWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(ReturnStatusWindow)
         self.statusbar.setObjectName("statusbar")
         ReturnStatusWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(ReturnStatusWindow)
+        from main_ui import ui as ui_main
+        self.backButton.clicked.connect(lambda: ui_main.setupUi(ReturnStatusWindow))
         QtCore.QMetaObject.connectSlotsByName(ReturnStatusWindow)
 
     def retranslateUi(self, ReturnStatusWindow):
@@ -132,12 +134,12 @@ class Ui_ReturnStatusWindow(object):
         self.label_4.setText(_translate("ReturnStatusWindow", "Issue"))
 
 
+ui = Ui_ReturnStatusWindow()
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
     ReturnStatusWindow = QtWidgets.QMainWindow()
-    ui = Ui_ReturnStatusWindow()
     ui.setupUi(ReturnStatusWindow)
     ReturnStatusWindow.show()
     sys.exit(app.exec_())

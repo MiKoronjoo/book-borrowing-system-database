@@ -84,6 +84,8 @@ class Ui_ReturnedBooksWindow(object):
         ReturnedBooksWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(ReturnedBooksWindow)
+        from main_ui import ui as ui_main
+        self.backButton.clicked.connect(lambda: ui_main.setupUi(ReturnedBooksWindow))
         self.BooksComboBox.currentIndexChanged['int'].connect(self.console.clear)
         QtCore.QMetaObject.connectSlotsByName(ReturnedBooksWindow)
 
@@ -110,12 +112,12 @@ class Ui_ReturnedBooksWindow(object):
         self.label_4.setText(_translate("ReturnedBooksWindow", "Books"))
 
 
+ui = Ui_ReturnedBooksWindow()
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
     ReturnedBooksWindow = QtWidgets.QMainWindow()
-    ui = Ui_ReturnedBooksWindow()
     ui.setupUi(ReturnedBooksWindow)
     ReturnedBooksWindow.show()
     sys.exit(app.exec_())

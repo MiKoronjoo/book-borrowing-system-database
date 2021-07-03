@@ -7,6 +7,12 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from books_ui import ui as ui_books
+from borrowed_books_ui import ui as ui_borrowed_books
+from issues_ui import ui as ui_issues
+from members_ui import ui as ui_members
+from returned_books_ui import ui as ui_returned_books
+from returns_ui import ui as ui_returns
 
 
 class Ui_MainWindow(object):
@@ -16,8 +22,7 @@ class Ui_MainWindow(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("bbs-icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
-        MainWindow.setStyleSheet("background-color: rgb(32, 215, 146);\n"
-                                 "")
+        MainWindow.setStyleSheet("background-color: rgb(32, 215, 146);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.booksButton = QtWidgets.QPushButton(self.centralwidget)
@@ -115,10 +120,12 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.booksButton.clicked.connect(MainWindow.show)
-        self.MemberButton.clicked.connect(MainWindow.show)
-        self.IssuesButton.clicked.connect(MainWindow.show)
-        self.ReturnsButton.clicked.connect(MainWindow.show)
+        self.booksButton.clicked.connect(lambda: ui_books.setupUi(MainWindow))
+        self.MemberButton.clicked.connect(lambda: ui_members.setupUi(MainWindow))
+        self.IssuesButton.clicked.connect(lambda: ui_issues.setupUi(MainWindow))
+        self.ReturnsButton.clicked.connect(lambda: ui_returns.setupUi(MainWindow))
+        self.BorBButton.clicked.connect(lambda: ui_borrowed_books.setupUi(MainWindow))
+        self.RetBButton.clicked.connect(lambda: ui_returned_books.setupUi(MainWindow))
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -127,12 +134,12 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "Select a table"))
 
 
+ui = Ui_MainWindow()
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

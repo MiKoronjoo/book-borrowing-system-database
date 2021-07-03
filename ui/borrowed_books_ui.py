@@ -84,6 +84,8 @@ class Ui_BorrowedBooksWindow(object):
         BorrowedBooksWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(BorrowedBooksWindow)
+        from main_ui import ui as ui_main
+        self.backButton.clicked.connect(lambda: ui_main.setupUi(BorrowedBooksWindow))
         self.BooksComboBox.currentIndexChanged['int'].connect(self.console.clear)
         self.searchButton.clicked.connect(self.BooksComboBox.clear)
         QtCore.QMetaObject.connectSlotsByName(BorrowedBooksWindow)
@@ -111,12 +113,12 @@ class Ui_BorrowedBooksWindow(object):
         self.label_4.setText(_translate("BorrowedBooksWindow", "Books"))
 
 
+ui = Ui_BorrowedBooksWindow()
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
     BorrowedBooksWindow = QtWidgets.QMainWindow()
-    ui = Ui_BorrowedBooksWindow()
     ui.setupUi(BorrowedBooksWindow)
     BorrowedBooksWindow.show()
     sys.exit(app.exec_())

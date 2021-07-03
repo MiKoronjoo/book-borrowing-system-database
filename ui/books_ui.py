@@ -96,45 +96,45 @@ class Ui_BooksWindow(object):
         self.console = QtWidgets.QTextBrowser(self.centralwidget)
         self.console.setGeometry(QtCore.QRect(60, 280, 591, 91))
         self.console.setObjectName("console")
-        self.deleteButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.deleteButton_2.setGeometry(QtCore.QRect(610, 40, 41, 41))
-        self.deleteButton_2.setStyleSheet("QPushButton {\n"
-                                          "border-image: url(icons/remove.png);\n"
-                                          "}\n"
-                                          "QPushButton:hover {\n"
-                                          "border-image: url(icons/remove-hover.png);\n"
-                                          "}\n"
-                                          "QPushButton:pressed {\n"
-                                          "border-image: url(icons/remove-pressed.png);\n"
-                                          "}")
-        self.deleteButton_2.setText("")
-        self.deleteButton_2.setObjectName("deleteButton_2")
-        self.submitButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.submitButton_2.setGeometry(QtCore.QRect(610, 220, 41, 41))
-        self.submitButton_2.setStyleSheet("QPushButton {\n"
-                                          "border-image: url(icons/plus.png);\n"
-                                          "}\n"
-                                          "QPushButton:hover {\n"
-                                          "border-image: url(icons/plus-hover.png);\n"
-                                          "}\n"
-                                          "QPushButton:pressed {\n"
-                                          "border-image: url(icons/plus-pressed.png);\n"
-                                          "}")
-        self.submitButton_2.setText("")
-        self.submitButton_2.setObjectName("submitButton_2")
-        self.refreshButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.refreshButton_2.setGeometry(QtCore.QRect(560, 40, 41, 41))
-        self.refreshButton_2.setStyleSheet("QPushButton {\n"
-                                           "border-image: url(icons/undo.png);\n"
-                                           "}\n"
-                                           "QPushButton:hover {\n"
-                                           "border-image: url(icons/undo-hover.png);\n"
-                                           "}\n"
-                                           "QPushButton:pressed {\n"
-                                           "border-image: url(icons/undo-pressed.png);\n"
-                                           "}")
-        self.refreshButton_2.setText("")
-        self.refreshButton_2.setObjectName("refreshButton_2")
+        self.deleteButton = QtWidgets.QPushButton(self.centralwidget)
+        self.deleteButton.setGeometry(QtCore.QRect(610, 40, 41, 41))
+        self.deleteButton.setStyleSheet("QPushButton {\n"
+                                        "border-image: url(icons/remove.png);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "border-image: url(icons/remove-hover.png);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {\n"
+                                        "border-image: url(icons/remove-pressed.png);\n"
+                                        "}")
+        self.deleteButton.setText("")
+        self.deleteButton.setObjectName("deleteButton")
+        self.submitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.submitButton.setGeometry(QtCore.QRect(610, 220, 41, 41))
+        self.submitButton.setStyleSheet("QPushButton {\n"
+                                        "border-image: url(icons/plus.png);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        "border-image: url(icons/plus-hover.png);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {\n"
+                                        "border-image: url(icons/plus-pressed.png);\n"
+                                        "}")
+        self.submitButton.setText("")
+        self.submitButton.setObjectName("submitButton")
+        self.refreshButton = QtWidgets.QPushButton(self.centralwidget)
+        self.refreshButton.setGeometry(QtCore.QRect(560, 40, 41, 41))
+        self.refreshButton.setStyleSheet("QPushButton {\n"
+                                         "border-image: url(icons/undo.png);\n"
+                                         "}\n"
+                                         "QPushButton:hover {\n"
+                                         "border-image: url(icons/undo-hover.png);\n"
+                                         "}\n"
+                                         "QPushButton:pressed {\n"
+                                         "border-image: url(icons/undo-pressed.png);\n"
+                                         "}")
+        self.refreshButton.setText("")
+        self.refreshButton.setObjectName("refreshButton")
         self.backButton = QtWidgets.QPushButton(self.centralwidget)
         self.backButton.setGeometry(QtCore.QRect(30, 30, 51, 51))
         self.backButton.setStyleSheet("QPushButton {\n"
@@ -154,6 +154,11 @@ class Ui_BooksWindow(object):
         BooksWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(BooksWindow)
+        from main_ui import ui as ui_main
+        self.backButton.clicked.connect(lambda: ui_main.setupUi(BooksWindow))
+        self.deleteButton.clicked.connect(lambda: 'remove')
+        self.refreshButton.clicked.connect(lambda: 'refresh')
+        self.submitButton.clicked.connect(lambda: 'submit')
         QtCore.QMetaObject.connectSlotsByName(BooksWindow)
 
     def retranslateUi(self, BooksWindow):
@@ -169,12 +174,12 @@ class Ui_BooksWindow(object):
         self.mainLabel.setText(_translate("BooksWindow", "Books"))
 
 
+ui = Ui_BooksWindow()
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
     BooksWindow = QtWidgets.QMainWindow()
-    ui = Ui_BooksWindow()
     ui.setupUi(BooksWindow)
     BooksWindow.show()
     sys.exit(app.exec_())

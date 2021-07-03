@@ -130,6 +130,8 @@ class Ui_IssueStatusWindow(object):
         IssueStatusWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(IssueStatusWindow)
+        from main_ui import ui as ui_main
+        self.backButton.clicked.connect(lambda: ui_main.setupUi(IssueStatusWindow))
         QtCore.QMetaObject.connectSlotsByName(IssueStatusWindow)
 
     def retranslateUi(self, IssueStatusWindow):
@@ -148,12 +150,12 @@ class Ui_IssueStatusWindow(object):
         self.label_5.setText(_translate("IssueStatusWindow", "Book"))
 
 
+ui = Ui_IssueStatusWindow()
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
     IssueStatusWindow = QtWidgets.QMainWindow()
-    ui = Ui_IssueStatusWindow()
     ui.setupUi(IssueStatusWindow)
     IssueStatusWindow.show()
     sys.exit(app.exec_())
