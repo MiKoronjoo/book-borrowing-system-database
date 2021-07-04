@@ -1,4 +1,6 @@
 import sqlite3
+from typing import Union
+
 from config import DB_PATH
 
 
@@ -17,7 +19,7 @@ class Table:
         con_obj.close()
 
     @classmethod
-    def find_via_pk(cls, pk: str) -> 'Table':
+    def find_via_pk(cls, pk: Union[str, int]) -> 'Table':
         con_obj = sqlite3.connect(DB_PATH)
         query = f'SELECT * FROM {cls._table_name} WHERE "{cls._table_pk}" = ?'
         courser = con_obj.execute(query, (pk,))
@@ -55,3 +57,14 @@ class Table:
         selected_table = cursor.fetchall()
         con_obj.close()
         return [cls(data) for data in selected_table]
+
+    @classmethod
+    def last_seq(cls):
+        con_obj = sqlite3.connect(DB_PATH)
+        query = f'SELECT seq FROM sqlite_sequence WHERE name = ?'
+        courser = con_obj.execute(query, (cls._table_name,))
+        result = courser.fetchall()
+        con_obj.commit()
+        con_obj.close()
+        if result:
+            return result[0][0]

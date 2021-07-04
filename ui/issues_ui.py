@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIntValidator
 
@@ -98,7 +100,7 @@ class Ui_IssueStatusWindow(object):
         self.dateTimeEdit = QtWidgets.QDateTimeEdit(self.centralwidget)
         self.dateTimeEdit.setGeometry(QtCore.QRect(170, 140, 141, 26))
         self.dateTimeEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.dateTimeEdit.setDate(QtCore.QDate(2021, 1, 1))
+        self.dateTimeEdit.setDateTime(datetime.now())
         self.dateTimeEdit.setObjectName("dateTimeEdit")
         self.MemberComboBox = QtWidgets.QComboBox(self.centralwidget)
         self.MemberComboBox.setGeometry(QtCore.QRect(330, 140, 151, 25))

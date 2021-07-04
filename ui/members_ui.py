@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIntValidator
 
@@ -80,7 +82,7 @@ class Ui_MembersWindow(object):
         self.dateTimeEdit = QtWidgets.QDateTimeEdit(self.centralwidget)
         self.dateTimeEdit.setGeometry(QtCore.QRect(60, 170, 194, 26))
         self.dateTimeEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.dateTimeEdit.setDate(QtCore.QDate(2021, 1, 1))
+        self.dateTimeEdit.setDateTime(datetime.now())
         self.dateTimeEdit.setObjectName("dateTimeEdit")
         self.submitButton = QtWidgets.QPushButton(self.centralwidget)
         self.submitButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -146,7 +148,12 @@ class Ui_MembersWindow(object):
         self.retranslateUi(MembersWindow)
         from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(MembersWindow))
+        self.refreshButton.clicked.connect(self.find_via_pk)
+        self.deleteButton.clicked.connect(self.delete_via_pk)
+        self.submitButton.clicked.connect(lambda: self.update_member() if self.update else self.insert_member())
+        self.IDEdit.editingFinished.connect(self.find_via_pk)
         QtCore.QMetaObject.connectSlotsByName(MembersWindow)
+        self.update = False
 
     def retranslateUi(self, MembersWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -158,6 +165,75 @@ class Ui_MembersWindow(object):
         self.label_5.setText(_translate("MembersWindow", "Address"))
         self.mainLabel.setText(_translate("MembersWindow", "Members"))
         self.label_8.setText(_translate("MembersWindow", "Age"))
+
+    def clear(self):
+        self.IDEdit.setText('')
+        self.NameEdit.setText('')
+        self.AgeEdit.setText('')
+        self.MaxCreditEdit.setText('')
+        self.AddressEdit.setText('')
+        self.dateTimeEdit.setDateTime(datetime.now())
+        self.update = False
+
+    def find_via_pk(self):
+        from tables.member import Member
+        ID = self.IDEdit.text().strip()
+        if not ID:
+            return
+        member = Member.find_via_pk(int(ID))
+        if member:
+            self.NameEdit.setText(member.name)
+            self.AgeEdit.setText(str(member.age))
+            self.AddressEdit.setText(member.address)
+            self.dateTimeEdit.setDateTime(datetime.fromtimestamp(member.registration_date))
+            self.MaxCreditEdit.setText(str(member.max_credit))
+            self.update = True
+            # TODO: change 'add' icon to 'update'
+        else:
+            self.update = False
+
+    def insert_member(self):
+        from tables.member import Member
+        ID = self.IDEdit.text().strip()
+        warning = f'Ignoring ID {ID} for new member\n' if ID else ''
+        Member.insert(dict(
+            name=self.NameEdit.text(),
+            age=int(self.AgeEdit.text() or '0'),
+            address=self.AddressEdit.text(),
+            registration_date=int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp()),
+            max_credit=int(self.MaxCreditEdit.text() or '0')
+        ))
+        seq = Member.last_seq()
+        self.clear()
+        self.console.setText(warning +
+                             'The member inserted successfully\n'
+                             f'Inserted member ID: {seq}')
+
+    def update_member(self):
+        from tables.member import Member
+        ID = self.IDEdit.text().strip()
+        if ID:
+            Member.update_via_pk(dict(
+                name=self.NameEdit.text(),
+                age=int(self.AgeEdit.text() or '0'),
+                address=self.AddressEdit.text(),
+                registration_date=int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp()),
+                max_credit=int(self.MaxCreditEdit.text() or '0')
+            ), int(ID))
+            self.clear()
+            self.console.setText('The member updated successfully')
+        else:
+            self.console.setText('Fill the ID field first')
+
+    def delete_via_pk(self):
+        from tables.member import Member
+        ID = self.IDEdit.text().strip()
+        if ID:
+            Member.delete_via_pk(int(ID))
+            self.clear()
+            self.console.setText(f'The member with ID {ID} deleted successfully')
+        else:
+            self.console.setText('For deleting, fill the ID field first')
 
 
 ui = Ui_MembersWindow()

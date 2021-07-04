@@ -231,7 +231,7 @@ class Ui_BooksWindow(object):
                 author=self.AuthorEdit.text(),
                 publisher=self.PublisherEdit.text(),
                 status=int(self.StatusEdit.text() or '0')
-            ), self.ISBNEdit.text())
+            ), isbn)
             self.clear()
             self.console.setText('The book updated successfully')
         else:
