@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtGui import QIntValidator, QCursor
 
 
 class Ui_IssueStatusWindow(object):
@@ -31,17 +31,11 @@ class Ui_IssueStatusWindow(object):
         self.MemberComboBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
                                           "selection-background-color: rgb(32, 215, 146);")
         self.MemberComboBox.setObjectName("MemberComboBox")
-        self.MemberComboBox.addItem("")
-        self.MemberComboBox.addItem("")
-        self.MemberComboBox.addItem("")
         self.BookComboBox = QtWidgets.QComboBox(self.centralwidget)
         self.BookComboBox.setGeometry(QtCore.QRect(500, 140, 151, 25))
         self.BookComboBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
                                         "selection-background-color: rgb(32, 215, 146);")
         self.BookComboBox.setObjectName("BookComboBox")
-        self.BookComboBox.addItem("")
-        self.BookComboBox.addItem("")
-        self.BookComboBox.addItem("")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(60, 120, 91, 17))
         self.label.setObjectName("label")
@@ -132,7 +126,13 @@ class Ui_IssueStatusWindow(object):
         self.retranslateUi(IssueStatusWindow)
         from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(IssueStatusWindow))
+        self.refreshButton.clicked.connect(self.find_via_pk)
+        self.deleteButton.clicked.connect(self.delete_via_pk)
+        self.submitButton.clicked.connect(lambda: self.update_issue() if self.update else self.insert_issue())
+        self.IDEdit.editingFinished.connect(self.find_via_pk)
         QtCore.QMetaObject.connectSlotsByName(IssueStatusWindow)
+        self.update = False
+        self._load_data()
 
     def retranslateUi(self, IssueStatusWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -140,14 +140,107 @@ class Ui_IssueStatusWindow(object):
         self.label.setText(_translate("IssueStatusWindow", "ID"))
         self.label_3.setText(_translate("IssueStatusWindow", "Date"))
         self.mainLabel.setText(_translate("IssueStatusWindow", "Issue status"))
-        self.MemberComboBox.setItemText(0, _translate("IssueStatusWindow", "0 | miko"))
-        self.MemberComboBox.setItemText(1, _translate("IssueStatusWindow", "1 | ali"))
-        self.MemberComboBox.setItemText(2, _translate("IssueStatusWindow", "2 | reza jafar abadi"))
-        self.BookComboBox.setItemText(0, _translate("IssueStatusWindow", "1234567890123 | miko"))
-        self.BookComboBox.setItemText(1, _translate("IssueStatusWindow", "9876543210 | ali"))
-        self.BookComboBox.setItemText(2, _translate("IssueStatusWindow", "Uno Uno"))
         self.label_4.setText(_translate("IssueStatusWindow", "Member"))
         self.label_5.setText(_translate("IssueStatusWindow", "Book"))
+
+    def _load_data(self):
+        from tables.member import Member
+        from tables.book import Book
+        for member in Member.find({}):
+            member: Member
+            text = f'{member.ID} | {member.name}'
+            if len(text) > 20:
+                text = text[:19] + '…'
+            self.MemberComboBox.addItem(text, str(member.ID))
+        for book in Book.find({}):
+            book: Book
+            text = f'{book.ISBN} | {book.title}'
+            if len(text) > 20:
+                text = text[:19] + '…'
+            self.BookComboBox.addItem(text, book.ISBN)
+        self.MemberComboBox.setCurrentIndex(-1)
+        self.BookComboBox.setCurrentIndex(-1)
+
+    def clear(self):
+        self.IDEdit.setText('')
+        self.dateTimeEdit.setDateTime(datetime.now())
+        self.MemberComboBox.setCurrentIndex(-1)
+        self.BookComboBox.setCurrentIndex(-1)
+        self.update = False
+
+    def find_via_pk(self):
+        from tables.issue_status import IssueStatus
+        ID = self.IDEdit.text().strip()
+        if not ID:
+            return
+        issue = IssueStatus.find_via_pk(int(ID))
+        if issue:
+            self.dateTimeEdit.setDateTime(datetime.fromtimestamp(issue.date))
+            self.MemberComboBox.find(0)
+            member_index = self.MemberComboBox.findData(str(issue.member.ID))
+            self.MemberComboBox.setCurrentIndex(member_index)
+            book_index = self.BookComboBox.findData(issue.book.ISBN)
+            self.BookComboBox.setCurrentIndex(book_index)
+            self.update = True
+            # TODO: change 'add' icon to 'update'
+            self.console.setText(f'Issue status with ID {ID} loaded from database')
+        else:
+            self.update = False
+
+    def insert_issue(self):
+        from tables.issue_status import IssueStatus
+        ID = self.IDEdit.text().strip()
+        warning = f'Ignoring ID {ID} for new issue status\n' if ID else ''
+        member_id = self.MemberComboBox.currentData()
+        book_isbn = self.BookComboBox.currentData()
+        if not member_id:
+            self.console.setText('Select a member to insert the issue status')
+            return
+        if not book_isbn:
+            self.console.setText('Select a book to insert the issue status')
+            return
+        IssueStatus.insert(dict(
+            date=int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp()),
+            member_id=int(member_id),
+            book_ISBN=book_isbn
+        ))
+        seq = IssueStatus.last_seq()
+        self.clear()
+        self.console.setText(warning +
+                             'The member inserted successfully\n'
+                             f'Inserted member ID: {seq}')
+
+    def update_issue(self):
+        from tables.issue_status import IssueStatus
+        ID = self.IDEdit.text().strip()
+        member_id = self.MemberComboBox.currentData()
+        book_isbn = self.BookComboBox.currentData()
+        if not member_id:
+            self.console.setText('Select a member to update the issue status')
+            return
+        if not book_isbn:
+            self.console.setText('Select a book to update the issue status')
+            return
+        if ID:
+            IssueStatus.update_via_pk(dict(
+                date=int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp()),
+                member_id=int(member_id),
+                book_ISBN=book_isbn
+            ), int(ID))
+            self.clear()
+            self.console.setText('The issue status updated successfully')
+        else:
+            self.console.setText('Fill the ID field first')
+
+    def delete_via_pk(self):
+        from tables.issue_status import IssueStatus
+        ID = self.IDEdit.text().strip()
+        if ID:
+            IssueStatus.delete_via_pk(int(ID))
+            self.clear()
+            self.console.setText(f'The member with ID {ID} deleted successfully')
+        else:
+            self.console.setText('For deleting, fill the ID field first')
 
 
 ui = Ui_IssueStatusWindow()
