@@ -198,6 +198,7 @@ class Ui_BooksWindow(object):
             self.StatusEdit.setText(str(book.status))
             self.update = True
             # TODO: change 'add' icon to 'update'
+            self.console.setText(f'Member with ISBN {isbn} loaded from database')
         else:
             self.update = False
 

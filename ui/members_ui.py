@@ -189,6 +189,7 @@ class Ui_MembersWindow(object):
             self.MaxCreditEdit.setText(str(member.max_credit))
             self.update = True
             # TODO: change 'add' icon to 'update'
+            self.console.setText(f'Member with ID {ID} loaded from database')
         else:
             self.update = False
 
