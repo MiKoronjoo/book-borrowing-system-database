@@ -92,6 +92,7 @@ class Ui_BooksWindow(object):
         self.console.setGeometry(QtCore.QRect(60, 280, 591, 91))
         self.console.setObjectName("console")
         self.deleteButton = QtWidgets.QPushButton(self.centralwidget)
+        self.deleteButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.deleteButton.setGeometry(QtCore.QRect(610, 40, 41, 41))
         self.deleteButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/remove.png);\n"
@@ -105,6 +106,7 @@ class Ui_BooksWindow(object):
         self.deleteButton.setText("")
         self.deleteButton.setObjectName("deleteButton")
         self.submitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.submitButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.submitButton.setGeometry(QtCore.QRect(610, 220, 41, 41))
         self.submitButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/plus.png);\n"
@@ -118,6 +120,7 @@ class Ui_BooksWindow(object):
         self.submitButton.setText("")
         self.submitButton.setObjectName("submitButton")
         self.refreshButton = QtWidgets.QPushButton(self.centralwidget)
+        self.refreshButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.refreshButton.setGeometry(QtCore.QRect(560, 40, 41, 41))
         self.refreshButton.setStyleSheet("QPushButton {\n"
                                          "border-image: url(icons/undo.png);\n"
@@ -131,6 +134,7 @@ class Ui_BooksWindow(object):
         self.refreshButton.setText("")
         self.refreshButton.setObjectName("refreshButton")
         self.backButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.backButton.setGeometry(QtCore.QRect(30, 30, 51, 51))
         self.backButton.setStyleSheet("QPushButton {\n"
                                       "border-image: url(icons/back.png);\n"

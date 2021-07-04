@@ -26,6 +26,7 @@ class Ui_IssueStatusWindow(object):
         self.label_3.setGeometry(QtCore.QRect(170, 120, 141, 17))
         self.label_3.setObjectName("label_3")
         self.submitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.submitButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.submitButton.setGeometry(QtCore.QRect(610, 210, 41, 41))
         self.submitButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/plus.png);\n"
@@ -39,6 +40,7 @@ class Ui_IssueStatusWindow(object):
         self.submitButton.setText("")
         self.submitButton.setObjectName("submitButton")
         self.refreshButton = QtWidgets.QPushButton(self.centralwidget)
+        self.refreshButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.refreshButton.setGeometry(QtCore.QRect(550, 60, 41, 41))
         self.refreshButton.setStyleSheet("QPushButton {\n"
                                          "border-image: url(icons/undo.png);\n"
@@ -52,6 +54,7 @@ class Ui_IssueStatusWindow(object):
         self.refreshButton.setText("")
         self.refreshButton.setObjectName("refreshButton")
         self.deleteButton = QtWidgets.QPushButton(self.centralwidget)
+        self.deleteButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.deleteButton.setGeometry(QtCore.QRect(610, 60, 41, 41))
         self.deleteButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/remove.png);\n"
@@ -79,6 +82,7 @@ class Ui_IssueStatusWindow(object):
         self.console.setGeometry(QtCore.QRect(60, 280, 591, 91))
         self.console.setObjectName("console")
         self.backButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.backButton.setGeometry(QtCore.QRect(30, 30, 51, 51))
         self.backButton.setStyleSheet("QPushButton {\n"
                                       "border-image: url(icons/back.png);\n"

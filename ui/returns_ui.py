@@ -55,6 +55,7 @@ class Ui_ReturnStatusWindow(object):
         self.label_4.setGeometry(QtCore.QRect(330, 120, 321, 17))
         self.label_4.setObjectName("label_4")
         self.deleteButton = QtWidgets.QPushButton(self.centralwidget)
+        self.deleteButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.deleteButton.setGeometry(QtCore.QRect(610, 60, 41, 41))
         self.deleteButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/remove.png);\n"
@@ -68,6 +69,7 @@ class Ui_ReturnStatusWindow(object):
         self.deleteButton.setText("")
         self.deleteButton.setObjectName("deleteButton")
         self.refreshButton = QtWidgets.QPushButton(self.centralwidget)
+        self.refreshButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.refreshButton.setGeometry(QtCore.QRect(550, 60, 41, 41))
         self.refreshButton.setStyleSheet("QPushButton {\n"
                                          "border-image: url(icons/undo.png);\n"
@@ -81,6 +83,7 @@ class Ui_ReturnStatusWindow(object):
         self.refreshButton.setText("")
         self.refreshButton.setObjectName("refreshButton")
         self.submitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.submitButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.submitButton.setGeometry(QtCore.QRect(610, 210, 41, 41))
         self.submitButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/plus.png);\n"
@@ -94,6 +97,7 @@ class Ui_ReturnStatusWindow(object):
         self.submitButton.setText("")
         self.submitButton.setObjectName("submitButton")
         self.backButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.backButton.setGeometry(QtCore.QRect(30, 30, 51, 51))
         self.backButton.setStyleSheet("QPushButton {\n"
                                       "border-image: url(icons/back.png);\n"

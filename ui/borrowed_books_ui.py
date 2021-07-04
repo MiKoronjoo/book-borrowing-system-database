@@ -23,6 +23,7 @@ class Ui_BorrowedBooksWindow(object):
         self.label.setGeometry(QtCore.QRect(60, 117, 91, 20))
         self.label.setObjectName("label")
         self.searchButton = QtWidgets.QPushButton(self.centralwidget)
+        self.searchButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.searchButton.setGeometry(QtCore.QRect(70, 170, 51, 51))
         self.searchButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/search.png);\n"
@@ -60,6 +61,7 @@ class Ui_BorrowedBooksWindow(object):
         self.label_4.setGeometry(QtCore.QRect(190, 119, 461, 21))
         self.label_4.setObjectName("label_4")
         self.backButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.backButton.setGeometry(QtCore.QRect(30, 30, 51, 51))
         self.backButton.setStyleSheet("QPushButton {\n"
                                       "border-image: url(icons/back.png);\n"

@@ -83,6 +83,7 @@ class Ui_MembersWindow(object):
         self.dateTimeEdit.setDate(QtCore.QDate(2021, 1, 1))
         self.dateTimeEdit.setObjectName("dateTimeEdit")
         self.submitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.submitButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.submitButton.setGeometry(QtCore.QRect(610, 220, 41, 41))
         self.submitButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/plus.png);\n"
@@ -96,6 +97,7 @@ class Ui_MembersWindow(object):
         self.submitButton.setText("")
         self.submitButton.setObjectName("submitButton")
         self.deleteButton = QtWidgets.QPushButton(self.centralwidget)
+        self.deleteButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.deleteButton.setGeometry(QtCore.QRect(610, 40, 41, 41))
         self.deleteButton.setStyleSheet("QPushButton {\n"
                                         "border-image: url(icons/remove.png);\n"
@@ -109,6 +111,7 @@ class Ui_MembersWindow(object):
         self.deleteButton.setText("")
         self.deleteButton.setObjectName("deleteButton")
         self.refreshButton = QtWidgets.QPushButton(self.centralwidget)
+        self.refreshButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.refreshButton.setGeometry(QtCore.QRect(550, 40, 41, 41))
         self.refreshButton.setStyleSheet("QPushButton {\n"
                                          "border-image: url(icons/undo.png);\n"
@@ -122,6 +125,7 @@ class Ui_MembersWindow(object):
         self.refreshButton.setText("")
         self.refreshButton.setObjectName("refreshButton")
         self.backButton = QtWidgets.QPushButton(self.centralwidget)
+        self.backButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.backButton.setGeometry(QtCore.QRect(30, 30, 51, 51))
         self.backButton.setStyleSheet("QPushButton {\n"
                                       "border-image: url(icons/back.png);\n"
