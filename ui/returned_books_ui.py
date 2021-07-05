@@ -92,8 +92,7 @@ class Ui_ReturnedBooksWindow(object):
         self.label_4.setText(_translate("ReturnedBooksWindow", "Books"))
 
     def search(self):
-        from tables.return_status import ReturnStatus
-        from tables.book import Book
+        from tables import ReturnStatus, Book
         ID = self.IDEdit.text().strip()
         self.BooksComboBox.clear()
         self.console.clear()
@@ -108,7 +107,7 @@ class Ui_ReturnedBooksWindow(object):
             self.console.setText('Fill the ID field first')
 
     def show_selected_book(self):
-        from tables.book import Book
+        from tables import Book
         isbn = self.BooksComboBox.currentData()
         if isbn is None:
             return

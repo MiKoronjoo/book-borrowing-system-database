@@ -135,7 +135,7 @@ class Ui_ReturnStatusWindow(object):
         self.label_4.setText(_translate("ReturnStatusWindow", "Issue"))
 
     def _load_data(self):
-        from tables.issue_status import IssueStatus
+        from tables import IssueStatus
         for issue in IssueStatus.find({}):
             issue: IssueStatus
             member_name = issue.member.name if len(issue.member.name) < 16 else issue.member.name[:14] + '…'
@@ -151,7 +151,7 @@ class Ui_ReturnStatusWindow(object):
         self.update = False
 
     def find_via_pk(self):
-        from tables.return_status import ReturnStatus
+        from tables import ReturnStatus
         ID = self.IDEdit.text().strip()
         if not ID:
             return
@@ -167,8 +167,7 @@ class Ui_ReturnStatusWindow(object):
             self.update = False
 
     def insert_return(self):
-        from tables.return_status import ReturnStatus
-        from tables.issue_status import IssueStatus
+        from tables import ReturnStatus, IssueStatus
         ID = self.IDEdit.text().strip()
         warning = f'Ignoring ID {ID} for new return status\n' if ID else ''
         issue_id = self.IssueComboBox.currentData()
@@ -189,8 +188,7 @@ class Ui_ReturnStatusWindow(object):
                              f'Inserted return state ID: {seq}')
 
     def update_return(self):
-        from tables.return_status import ReturnStatus
-        from tables.issue_status import IssueStatus
+        from tables import ReturnStatus, IssueStatus
         ID = self.IDEdit.text().strip()
         issue_id = self.IssueComboBox.currentData()
         if not issue_id:
@@ -210,7 +208,7 @@ class Ui_ReturnStatusWindow(object):
             self.console.setText('Fill the ID field first')
 
     def delete_via_pk(self):
-        from tables.return_status import ReturnStatus
+        from tables import ReturnStatus
         ID = self.IDEdit.text().strip()
         if ID:
             ReturnStatus.delete_via_pk(int(ID))

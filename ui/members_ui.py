@@ -176,7 +176,7 @@ class Ui_MembersWindow(object):
         self.update = False
 
     def find_via_pk(self):
-        from tables.member import Member
+        from tables import Member
         ID = self.IDEdit.text().strip()
         if not ID:
             return
@@ -194,7 +194,7 @@ class Ui_MembersWindow(object):
             self.update = False
 
     def insert_member(self):
-        from tables.member import Member
+        from tables import Member
         ID = self.IDEdit.text().strip()
         warning = f'Ignoring ID {ID} for new member\n' if ID else ''
         Member.insert(dict(
@@ -211,7 +211,7 @@ class Ui_MembersWindow(object):
                              f'Inserted member ID: {seq}')
 
     def update_member(self):
-        from tables.member import Member
+        from tables import Member
         ID = self.IDEdit.text().strip()
         if ID:
             Member.update_via_pk(dict(
@@ -227,7 +227,7 @@ class Ui_MembersWindow(object):
             self.console.setText('Fill the ID field first')
 
     def delete_via_pk(self):
-        from tables.member import Member
+        from tables import Member
         ID = self.IDEdit.text().strip()
         if ID:
             Member.delete_via_pk(int(ID))

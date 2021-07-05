@@ -144,8 +144,7 @@ class Ui_IssueStatusWindow(object):
         self.label_5.setText(_translate("IssueStatusWindow", "Book"))
 
     def _load_data(self):
-        from tables.member import Member
-        from tables.book import Book
+        from tables import Member, Book
         for member in Member.find({}):
             member: Member
             text = f'{member.ID} | {member.name}'
@@ -169,7 +168,7 @@ class Ui_IssueStatusWindow(object):
         self.update = False
 
     def find_via_pk(self):
-        from tables.issue_status import IssueStatus
+        from tables import IssueStatus
         ID = self.IDEdit.text().strip()
         if not ID:
             return
@@ -187,7 +186,7 @@ class Ui_IssueStatusWindow(object):
             self.update = False
 
     def insert_issue(self):
-        from tables.issue_status import IssueStatus
+        from tables import IssueStatus
         ID = self.IDEdit.text().strip()
         warning = f'Ignoring ID {ID} for new issue status\n' if ID else ''
         member_id = self.MemberComboBox.currentData()
@@ -210,7 +209,7 @@ class Ui_IssueStatusWindow(object):
                              f'Inserted issue state ID: {seq}')
 
     def update_issue(self):
-        from tables.issue_status import IssueStatus
+        from tables import IssueStatus
         ID = self.IDEdit.text().strip()
         member_id = self.MemberComboBox.currentData()
         book_isbn = self.BookComboBox.currentData()
@@ -232,7 +231,7 @@ class Ui_IssueStatusWindow(object):
             self.console.setText('Fill the ID field first')
 
     def delete_via_pk(self):
-        from tables.issue_status import IssueStatus
+        from tables import IssueStatus
         ID = self.IDEdit.text().strip()
         if ID:
             IssueStatus.delete_via_pk(int(ID))

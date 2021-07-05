@@ -186,7 +186,7 @@ class Ui_BooksWindow(object):
         self.update = False
 
     def find_via_pk(self):
-        from tables.book import Book
+        from tables import Book
         isbn = self.ISBNEdit.text().strip()
         book = Book.find_via_pk(isbn)
         if book:
@@ -203,7 +203,7 @@ class Ui_BooksWindow(object):
             self.update = False
 
     def insert_book(self):
-        from tables.book import Book
+        from tables import Book
         isbn = self.ISBNEdit.text().strip()
         if isbn:
             Book.insert(dict(
@@ -221,7 +221,7 @@ class Ui_BooksWindow(object):
             self.console.setText('Fill the ISBN field first')
 
     def update_book(self):
-        from tables.book import Book
+        from tables import Book
         isbn = self.ISBNEdit.text().strip()
         if isbn:
             Book.update_via_pk(dict(
@@ -239,7 +239,7 @@ class Ui_BooksWindow(object):
             self.console.setText('Fill the ISBN field first')
 
     def delete_via_pk(self):
-        from tables.book import Book
+        from tables import Book
         isbn = self.ISBNEdit.text().strip()
         if isbn:
             Book.delete_via_pk(isbn)
