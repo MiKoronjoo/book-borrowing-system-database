@@ -13,3 +13,19 @@ class Member(Table):
         self.address = data[3]
         self.registration_date = data[4]
         self.max_credit = data[5]
+
+    def update_database(self):
+        self.update_via_pk(dict(
+            name=self.name,
+            age=self.age,
+            address=self.address,
+            registration_date=self.registration_date,
+            max_credit=self.max_credit
+        ), self.ID)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            self.update_database()

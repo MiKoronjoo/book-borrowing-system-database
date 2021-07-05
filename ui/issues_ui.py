@@ -237,11 +237,10 @@ class Ui_IssueStatusWindow(object):
             self.console.setText('Select a book to update the issue status')
             return
         if ID:
-            IssueStatus.update_via_pk(dict(
-                date=int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp()),
-                member_id=int(member_id),
-                book_ISBN=book_isbn
-            ), int(ID))
+            with IssueStatus.find_via_pk(int(ID)) as issue:
+                issue.date = int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp())
+                issue.member_id = int(member_id)
+                issue.book_ISBN = book_isbn
             self.clear()
             self.console.setText(f'The issue status with ID {ID} updated successfully')
         else:

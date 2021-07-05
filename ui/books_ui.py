@@ -241,15 +241,13 @@ class Ui_BooksWindow(object):
         from tables import Book
         isbn = self.ISBNEdit.text().strip()
         if isbn:
-            Book.update_via_pk(dict(
-                ISBN=isbn,
-                title=self.TitleEdit.text(),
-                category=self.CategoryEdit.text(),
-                price=int(self.PriceEdit.text() or '0'),
-                author=self.AuthorEdit.text(),
-                publisher=self.PublisherEdit.text(),
-                status=int(self.StatusEdit.text() or '0')
-            ), isbn)
+            with Book.find_via_pk(isbn) as book:
+                book.title = self.TitleEdit.text()
+                book.category = self.CategoryEdit.text()
+                book.price = int(self.PriceEdit.text() or '0')
+                book.author = self.AuthorEdit.text()
+                book.publisher = self.PublisherEdit.text()
+                book.status = int(self.StatusEdit.text() or '0')
             self.clear()
             self.console.setText('The book updated successfully')
         else:

@@ -231,13 +231,12 @@ class Ui_MembersWindow(object):
         from tables import Member
         ID = self.IDEdit.text().strip()
         if ID:
-            Member.update_via_pk(dict(
-                name=self.NameEdit.text(),
-                age=int(self.AgeEdit.text() or '0'),
-                address=self.AddressEdit.text(),
-                registration_date=int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp()),
-                max_credit=int(self.MaxCreditEdit.text() or '0')
-            ), int(ID))
+            with Member.find_via_pk(int(ID)) as member:
+                member.name = self.NameEdit.text()
+                member.age = int(self.AgeEdit.text() or '0')
+                member.address = self.AddressEdit.text()
+                member.registration_date = int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp())
+                member.max_credit = int(self.MaxCreditEdit.text() or '0')
             self.clear()
             self.console.setText('The member updated successfully')
         else:

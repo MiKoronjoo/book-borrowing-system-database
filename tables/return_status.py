@@ -23,3 +23,18 @@ class ReturnStatus(Table):
     @classmethod
     def returned_books(cls, member_id):
         return [return_status.book for return_status in cls.find(dict(member_id=member_id))]
+
+    def update_database(self):
+        self.update_via_pk(dict(
+            issue_id=self.issue_id,
+            date=self.date,
+            member_id=self.member_id,
+            book_ISBN=self.book_ISBN
+        ), self.return_id)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            self.update_database()

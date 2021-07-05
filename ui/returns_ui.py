@@ -213,12 +213,12 @@ class Ui_ReturnStatusWindow(object):
             return
         if ID:
             issue = IssueStatus.find_via_pk(issue_id)
-            ReturnStatus.update_via_pk(dict(
-                issue_id=int(issue_id),
-                date=int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp()),
-                member_id=int(issue.member_id),
-                book_ISBN=issue.book_ISBN
-            ), int(ID))
+            with ReturnStatus.find_via_pk(int(ID)) as returned:
+                returned.issue_id = int(issue_id)
+                returned.date = int(self.dateTimeEdit.dateTime().toPyDateTime().timestamp())
+                returned.member_id = int(issue.member_id)
+                returned.book_ISBN = issue.book_ISBN
+
             self.clear()
             self.console.setText(f'The return status with ID {ID} updated successfully')
         else:
