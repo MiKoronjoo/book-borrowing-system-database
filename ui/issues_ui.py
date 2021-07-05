@@ -176,7 +176,6 @@ class Ui_IssueStatusWindow(object):
         issue = IssueStatus.find_via_pk(int(ID))
         if issue:
             self.dateTimeEdit.setDateTime(datetime.fromtimestamp(issue.date))
-            self.MemberComboBox.find(0)
             member_index = self.MemberComboBox.findData(str(issue.member.ID))
             self.MemberComboBox.setCurrentIndex(member_index)
             book_index = self.BookComboBox.findData(issue.book.ISBN)
@@ -207,8 +206,8 @@ class Ui_IssueStatusWindow(object):
         seq = IssueStatus.last_seq()
         self.clear()
         self.console.setText(warning +
-                             'The member inserted successfully\n'
-                             f'Inserted member ID: {seq}')
+                             'The issue state inserted successfully\n'
+                             f'Inserted issue state ID: {seq}')
 
     def update_issue(self):
         from tables.issue_status import IssueStatus
@@ -228,7 +227,7 @@ class Ui_IssueStatusWindow(object):
                 book_ISBN=book_isbn
             ), int(ID))
             self.clear()
-            self.console.setText('The issue status updated successfully')
+            self.console.setText(f'The issue status with ID {ID} updated successfully')
         else:
             self.console.setText('Fill the ID field first')
 
