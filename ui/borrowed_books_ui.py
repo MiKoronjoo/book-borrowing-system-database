@@ -24,8 +24,6 @@ class Ui_BorrowedBooksWindow(object):
         self.BooksComboBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
                                          "selection-background-color: rgb(32, 215, 146);")
         self.BooksComboBox.setObjectName("BooksComboBox")
-        self.BooksComboBox.addItem("")
-        self.BooksComboBox.addItem("")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(60, 117, 91, 20))
         self.label.setObjectName("label")
@@ -82,8 +80,9 @@ class Ui_BorrowedBooksWindow(object):
         self.retranslateUi(BorrowedBooksWindow)
         from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(BorrowedBooksWindow))
-        self.BooksComboBox.currentIndexChanged['int'].connect(self.console.clear)
-        self.searchButton.clicked.connect(self.BooksComboBox.clear)
+        # self.BooksComboBox.currentIndexChanged['int'].connect(self.console.clear)
+        self.BooksComboBox.currentIndexChanged.connect(self.show_selected_book)
+        self.searchButton.clicked.connect(self.search)
         QtCore.QMetaObject.connectSlotsByName(BorrowedBooksWindow)
 
     def retranslateUi(self, BorrowedBooksWindow):
@@ -91,22 +90,44 @@ class Ui_BorrowedBooksWindow(object):
         BorrowedBooksWindow.setWindowTitle(_translate("BorrowedBooksWindow", "Borrowed Books"))
         self.label.setText(_translate("BorrowedBooksWindow", "Member ID"))
         self.mainLabel.setText(_translate("BorrowedBooksWindow", "Borrowed Books"))
+        self.label_4.setText(_translate("BorrowedBooksWindow", "Books"))
+
+    def search(self):
+        from tables.issue_status import IssueStatus
+        from tables.book import Book
+        ID = self.IDEdit.text().strip()
+        self.BooksComboBox.clear()
+        self.console.clear()
+        if ID:
+            books = IssueStatus.borrowed_books(int(ID))
+            for book in books:
+                book: Book
+                self.BooksComboBox.addItem(f'{book.ISBN} | {book.title} | {book.author}', book.ISBN)
+            self.BooksComboBox.setCurrentIndex(-1)
+            self.console.setText(f'{len(books)} book(s) found for Member({ID})')
+        else:
+            self.console.setText('Fill the ID field first')
+
+    def show_selected_book(self):
+        from tables.book import Book
+        isbn = self.BooksComboBox.currentData()
+        if isbn is None:
+            return
+        book = Book.find_via_pk(isbn)
+        _translate = QtCore.QCoreApplication.translate
+        prestr = '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">'
         self.console.setHtml(_translate("BorrowedBooksWindow",
                                         "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                                         "p, li { white-space: pre-wrap; }\n"
                                         "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
-                                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ISBN: <span style=\" font-weight:600;\">1234567845214</span></p>\n"
-                                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Title: <span style=\" font-weight:600;\">Python is Fun</span></p>\n"
-                                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Category: Fun, Programming</p>\n"
-                                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Price: 99.99 $</p>\n"
-                                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Auther: <span style=\" font-weight:600;\">Ahmad Towhidi</span></p>\n"
-                                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Publisher: Shiraz University Pub.</p>\n"
-                                        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Status: 475</p></body></html>"))
-        self.BooksComboBox.setItemText(0, _translate("BorrowedBooksWindow", "0 | miko | Python"))
-        self.BooksComboBox.setItemText(1,
-                                       _translate("BorrowedBooksWindow", "1 | Nader Shah Afshar | How to rule a relm"))
-        self.label_4.setText(_translate("BorrowedBooksWindow", "Books"))
+                                        f"{prestr}ISBN: <span style=\" font-weight:600;\">{book.ISBN}</span></p>\n"
+                                        f"{prestr}Title: <span style=\" font-weight:600;\">{book.title}</span></p>\n"
+                                        f"{prestr}Category: {book.category}</p>\n"
+                                        f"{prestr}Price: {book.price} $</p>\n"
+                                        f"{prestr}Author: <span style=\" font-weight:600;\">{book.author}</span></p>\n"
+                                        f"{prestr}Publisher: {book.publisher}</p>\n"
+                                        f"{prestr}Status: {book.status}</p></body></html>"))
 
 
 ui = Ui_BorrowedBooksWindow()
