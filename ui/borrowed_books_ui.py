@@ -80,7 +80,6 @@ class Ui_BorrowedBooksWindow(object):
         self.retranslateUi(BorrowedBooksWindow)
         from .main_ui import ui as ui_main
         self.backButton.clicked.connect(lambda: ui_main.setupUi(BorrowedBooksWindow))
-        # self.BooksComboBox.currentIndexChanged['int'].connect(self.console.clear)
         self.BooksComboBox.currentIndexChanged.connect(self.show_selected_book)
         self.searchButton.clicked.connect(self.search)
         QtCore.QMetaObject.connectSlotsByName(BorrowedBooksWindow)
@@ -104,7 +103,7 @@ class Ui_BorrowedBooksWindow(object):
                 book: Book
                 self.BooksComboBox.addItem(f'{book.ISBN} | {book.title} | {book.author}', book.ISBN)
             self.BooksComboBox.setCurrentIndex(-1)
-            self.console.setText(f'{len(books)} book(s) found for Member({ID})')
+            self.console.setText(f'{len(books)} book(s) found for member with ID {ID}')
         else:
             self.console.setText('Fill the ID field first')
 
