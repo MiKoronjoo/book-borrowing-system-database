@@ -153,7 +153,7 @@ class Ui_MembersWindow(object):
         self.submitButton.clicked.connect(lambda: self.update_member() if self.update else self.insert_member())
         self.IDEdit.editingFinished.connect(self.find_via_pk)
         QtCore.QMetaObject.connectSlotsByName(MembersWindow)
-        self.update = False
+        self._update = False
 
     def retranslateUi(self, MembersWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -165,6 +165,24 @@ class Ui_MembersWindow(object):
         self.label_5.setText(_translate("MembersWindow", "Address"))
         self.mainLabel.setText(_translate("MembersWindow", "Members"))
         self.label_8.setText(_translate("MembersWindow", "Age"))
+
+    @property
+    def update(self):
+        return self._update
+
+    @update.setter
+    def update(self, value):
+        self._update = value
+        icon_name = 'check' if self._update else 'plus'
+        self.submitButton.setStyleSheet("QPushButton {\n"
+                                        f"border-image: url(icons/{icon_name}.png);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        f"border-image: url(icons/{icon_name}-hover.png);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {\n"
+                                        f"border-image: url(icons/{icon_name}-pressed.png);\n"
+                                        "}")
 
     def clear(self):
         self.IDEdit.setText('')
@@ -188,7 +206,6 @@ class Ui_MembersWindow(object):
             self.dateTimeEdit.setDateTime(datetime.fromtimestamp(member.registration_date))
             self.MaxCreditEdit.setText(str(member.max_credit))
             self.update = True
-            # TODO: change 'add' icon to 'update'
             self.console.setText(f'Member with ID {ID} loaded from database')
         else:
             self.update = False

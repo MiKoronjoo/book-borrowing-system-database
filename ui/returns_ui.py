@@ -123,7 +123,7 @@ class Ui_ReturnStatusWindow(object):
         self.submitButton.clicked.connect(lambda: self.update_return() if self.update else self.insert_return())
         self.IDEdit.editingFinished.connect(self.find_via_pk)
         QtCore.QMetaObject.connectSlotsByName(ReturnStatusWindow)
-        self.update = False
+        self._update = False
         self._load_data()
 
     def retranslateUi(self, ReturnStatusWindow):
@@ -144,6 +144,24 @@ class Ui_ReturnStatusWindow(object):
             self.IssueComboBox.addItem(text, str(issue.issue_id))
         self.IssueComboBox.setCurrentIndex(-1)
 
+    @property
+    def update(self):
+        return self._update
+
+    @update.setter
+    def update(self, value):
+        self._update = value
+        icon_name = 'check' if self._update else 'plus'
+        self.submitButton.setStyleSheet("QPushButton {\n"
+                                        f"border-image: url(icons/{icon_name}.png);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        f"border-image: url(icons/{icon_name}-hover.png);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {\n"
+                                        f"border-image: url(icons/{icon_name}-pressed.png);\n"
+                                        "}")
+
     def clear(self):
         self.IDEdit.setText('')
         self.dateTimeEdit.setDateTime(datetime.now())
@@ -161,7 +179,6 @@ class Ui_ReturnStatusWindow(object):
             issue_index = self.IssueComboBox.findData(str(returned.issue_id))
             self.IssueComboBox.setCurrentIndex(issue_index)
             self.update = True
-            # TODO: change 'add' icon to 'update'
             self.console.setText(f'Return status with ID {ID} loaded from database')
         else:
             self.update = False

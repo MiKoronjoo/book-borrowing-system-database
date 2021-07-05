@@ -131,7 +131,7 @@ class Ui_IssueStatusWindow(object):
         self.submitButton.clicked.connect(lambda: self.update_issue() if self.update else self.insert_issue())
         self.IDEdit.editingFinished.connect(self.find_via_pk)
         QtCore.QMetaObject.connectSlotsByName(IssueStatusWindow)
-        self.update = False
+        self._update = False
         self._load_data()
 
     def retranslateUi(self, IssueStatusWindow):
@@ -160,6 +160,24 @@ class Ui_IssueStatusWindow(object):
         self.MemberComboBox.setCurrentIndex(-1)
         self.BookComboBox.setCurrentIndex(-1)
 
+    @property
+    def update(self):
+        return self._update
+
+    @update.setter
+    def update(self, value):
+        self._update = value
+        icon_name = 'check' if self._update else 'plus'
+        self.submitButton.setStyleSheet("QPushButton {\n"
+                                        f"border-image: url(icons/{icon_name}.png);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        f"border-image: url(icons/{icon_name}-hover.png);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {\n"
+                                        f"border-image: url(icons/{icon_name}-pressed.png);\n"
+                                        "}")
+
     def clear(self):
         self.IDEdit.setText('')
         self.dateTimeEdit.setDateTime(datetime.now())
@@ -180,7 +198,6 @@ class Ui_IssueStatusWindow(object):
             book_index = self.BookComboBox.findData(issue.book.ISBN)
             self.BookComboBox.setCurrentIndex(book_index)
             self.update = True
-            # TODO: change 'add' icon to 'update'
             self.console.setText(f'Issue status with ID {ID} loaded from database')
         else:
             self.update = False

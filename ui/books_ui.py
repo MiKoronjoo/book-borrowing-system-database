@@ -160,7 +160,7 @@ class Ui_BooksWindow(object):
         self.submitButton.clicked.connect(lambda: self.update_book() if self.update else self.insert_book())
         self.ISBNEdit.editingFinished.connect(self.find_via_pk)
         QtCore.QMetaObject.connectSlotsByName(BooksWindow)
-        self.update = False
+        self._update = False
 
     def retranslateUi(self, BooksWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -173,6 +173,24 @@ class Ui_BooksWindow(object):
         self.label_6.setText(_translate("BooksWindow", "Publisher"))
         self.label_7.setText(_translate("BooksWindow", "Status"))
         self.mainLabel.setText(_translate("BooksWindow", "Books"))
+
+    @property
+    def update(self):
+        return self._update
+
+    @update.setter
+    def update(self, value):
+        self._update = value
+        icon_name = 'check' if self._update else 'plus'
+        self.submitButton.setStyleSheet("QPushButton {\n"
+                                        f"border-image: url(icons/{icon_name}.png);\n"
+                                        "}\n"
+                                        "QPushButton:hover {\n"
+                                        f"border-image: url(icons/{icon_name}-hover.png);\n"
+                                        "}\n"
+                                        "QPushButton:pressed {\n"
+                                        f"border-image: url(icons/{icon_name}-pressed.png);\n"
+                                        "}")
 
     def clear(self):
         self.ISBNEdit.setText('')
@@ -197,7 +215,6 @@ class Ui_BooksWindow(object):
             self.PublisherEdit.setText(book.publisher)
             self.StatusEdit.setText(str(book.status))
             self.update = True
-            # TODO: change 'add' icon to 'update'
             self.console.setText(f'Member with ISBN {isbn} loaded from database')
         else:
             self.update = False
