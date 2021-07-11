@@ -32,6 +32,9 @@ class ReturnStatus(Table):
             book_ISBN=self.book_ISBN
         ), self.return_id)
 
+    def delete(self):
+        self.delete_via_pk(self.return_id)
+
     def __enter__(self):
         return self
 

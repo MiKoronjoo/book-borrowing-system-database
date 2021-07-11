@@ -28,6 +28,17 @@ class IssueStatus(Table):
             book_ISBN=self.book_ISBN
         ), self.issue_id)
 
+    def delete(self):
+        self.delete_via_pk(self.issue_id)
+
+    @classmethod
+    def delete_via_pk(cls, pk: str) -> None:
+        from .return_status import ReturnStatus
+        super().delete_via_pk(pk)
+        for returned in ReturnStatus.find(dict(issue_id=pk)):
+            returned: ReturnStatus
+            returned.delete()
+
     def __enter__(self):
         return self
 
