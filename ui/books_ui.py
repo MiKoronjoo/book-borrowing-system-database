@@ -215,7 +215,7 @@ class Ui_BooksWindow(object):
             self.PublisherEdit.setText(book.publisher)
             self.StatusEdit.setText(str(book.status))
             self.update = True
-            self.console.setText(f'Member with ISBN {isbn} loaded from database')
+            self.console.setText(f'Book with ISBN {isbn} loaded from database')
         else:
             self.update = False
 
