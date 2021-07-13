@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtGui import QIntValidator, QPixmap, QImage
 
 
 class Ui_BooksWindow(object):
@@ -89,8 +89,8 @@ class Ui_BooksWindow(object):
         self.mainLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.mainLabel.setObjectName("mainLabel")
         self.console = QtWidgets.QTextBrowser(self.centralwidget)
-        self.console.setGeometry(QtCore.QRect(60, 280, 591, 91))
         self.console.setObjectName("console")
+        self.console.setGeometry(QtCore.QRect(60, 280, 591, 91))
         self.deleteButton = QtWidgets.QPushButton(self.centralwidget)
         self.deleteButton.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.deleteButton.setGeometry(QtCore.QRect(610, 40, 41, 41))
@@ -151,6 +151,10 @@ class Ui_BooksWindow(object):
         self.statusbar = QtWidgets.QStatusBar(BooksWindow)
         self.statusbar.setObjectName("statusbar")
         BooksWindow.setStatusBar(self.statusbar)
+        self.photo = QtWidgets.QLabel(self.centralwidget)
+        self.photo.setGeometry(QtCore.QRect(470, 210, 120, 160))
+        self.photo.setObjectName("photo")
+        self.photo.hide()
 
         self.retranslateUi(BooksWindow)
         from .main_ui import ui as ui_main
@@ -201,7 +205,31 @@ class Ui_BooksWindow(object):
         self.PublisherEdit.setText('')
         self.StatusEdit.setText('')
         self.console.setText('')
+        self.photo.hide()
         self.update = False
+
+    def isbn_search(self, isbn):
+        import requests
+        response = requests.get(f'https://www.abebooks.com/servlet/HighlightInventory?isbn={isbn}')
+        self.console.setText('')
+        self.photo.hide()
+        if response:
+            item_map = response.json()['highlightedItemsMap']
+            found = item_map and item_map['SORT_MODE_FEATURED']
+            if found:
+                self.TitleEdit.setText(found[0]['title'])
+                self.CategoryEdit.setText('')
+                self.PriceEdit.setText(str(round(float(found[0]['displayPrice'][4:]))))
+                self.AuthorEdit.setText(found[0]['author'])
+                self.PublisherEdit.setText('')
+                self.StatusEdit.setText('')
+                self.console.setText('Load data from abebooks.com')
+                img = requests.get(found[0]['imageUrl'])
+                if img:
+                    image = QImage()
+                    image.loadFromData(img.content)
+                    self.photo.setPixmap(QPixmap(image).scaled(120, 160))
+                    self.photo.show()
 
     def find_via_pk(self):
         from tables import Book
@@ -217,6 +245,8 @@ class Ui_BooksWindow(object):
             self.update = True
             self.console.setText(f'Book with ISBN {isbn} loaded from database')
         else:
+            if isbn.isnumeric() and len(isbn) in (10, 13):
+                self.isbn_search(isbn)
             self.update = False
 
     def insert_book(self):
