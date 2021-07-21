@@ -9,7 +9,8 @@
 - Perfectly support UTF-8
 
 ## Instalation
-- Install requirements `pip3 install -r requirements.txt`
+- Install requirements: `pip3 install -r requirements.txt`
+- Initialize the database: `python3 app.py` 
 
 ## Usage
 - Run the interface: `python3 ui.py`
